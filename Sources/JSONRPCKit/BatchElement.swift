@@ -48,6 +48,7 @@ internal extension BatchElementProcotol {
     }
 
     internal func result(from object: Any) -> Result<Request.Response, JSONRPCError> {
+        
         guard let dictionary = object as? [String: Any] else {
             return .failure(.unexpectedTypeObject(object))
         }
@@ -81,8 +82,11 @@ internal extension BatchElementProcotol {
     }
 
     internal func result(from objects: [Any]) -> Result<Request.Response, JSONRPCError> {
+        
+        Swift.print("JSONRPCKit: result from objects >> \(objects)")
+
         let matchedObject = objects
-            .flatMap { $0 as? [String: Any] }
+            .compactMap { $0 as? [String: Any] }
             .filter { $0["id"].flatMap(Id.init) == id }
             .first
 
@@ -136,7 +140,7 @@ public struct BatchElement<Request: JSONRPCKit.Request>: BatchElementProcotol {
         self.request = request
         self.version = version
         self.id = id
-        self.body = body
+        self.body = body        
     }
 }
 

@@ -57,5 +57,13 @@ public func ==(lhs: Id, rhs: Id) -> Bool {
         return left == right
     }
     
+    if case let (.string(left), .number(right)) = (lhs, rhs) {
+        return Int(left) == right
+    }
+    
+    if case let (.number(left), .string(right)) = (lhs, rhs) {
+        return left == Int(right)
+    }
+    
     return false
 }

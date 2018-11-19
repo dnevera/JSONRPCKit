@@ -10,15 +10,15 @@ import Foundation
 
 public struct NumberIdGenerator: IdGenerator {
     
-    private var currentId = 1
+    private static var currentId = 1
 
     public init() {}
 
     public mutating func next() -> Id {
         defer {
-            currentId += 1
+            NumberIdGenerator.currentId += 1
         }
         
-        return .number(currentId)
+        return .number(NumberIdGenerator.currentId)
     }
 }
