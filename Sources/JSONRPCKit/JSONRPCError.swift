@@ -29,15 +29,14 @@ public enum JSONRPCError: Error {
                 throw ParseError.nonDictionaryObject(object: errorObject)
             }
             
-            guard let code = dictionary["code"] as? Int else {
+            guard let code = dictionary["code"] else {
                 throw ParseError.missingKey(key: "code", errorObject: errorObject)
             }
 
             guard let message = dictionary["message"] as? String else {
                 throw ParseError.missingKey(key: "message", errorObject: errorObject)
             }
-
-            self = .responseError(code: code, message: message, data: dictionary["data"])
+            self = .responseError(code: Int("\(code)") ?? 0, message: message, data: dictionary["data"])
         } catch {
             self = .errorObjectParseError(error)
         }
